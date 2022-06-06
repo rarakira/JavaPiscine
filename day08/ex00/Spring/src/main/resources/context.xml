@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--  PreProcessor constructor()  -->
+    <bean id="preProcessorToUpper" class="preprocessor.PreProcessorToUpperImpl"/>
+    <bean id="preProcessorToLower" class="preprocessor.PreProcessorToLowerImpl"/>
+
+    <!--  Renderer constructor(PreProcessor)  -->
+    <bean id="rendererErrUpper" class="renderer.RendererErrImpl">
+        <constructor-arg name="preProcessor" ref="preProcessorToUpper"/>
+    </bean>
+    <bean id="rendererErrLower" class="renderer.RendererErrImpl">
+        <constructor-arg name="preProcessor" ref="preProcessorToLower"/>
+    </bean>
+    <bean id="rendererStdUpper" class="renderer.RendererStandardImpl">
+        <constructor-arg name="preProcessor" ref="preProcessorToUpper"/>
+    </bean>
+    <bean id="rendererStdLower" class="renderer.RendererStandardImpl">
+        <constructor-arg name="preProcessor" ref="preProcessorToLower"/>
+    </bean>
+
+    <!--  Printer Error constructor(Renderer)  -->
+    <bean id="printerWithPrefix-ErrLower" class="printer.PrinterWithPrefixImpl">
+        <constructor-arg name="renderer" ref="rendererErrLower"/>
+        <property name="prefix" value="PREFIX"/>
+    </bean>
+    <bean id="printerWithPrefix-ErrUpper" class="printer.PrinterWithPrefixImpl">
+        <constructor-arg name="renderer" ref="rendererErrUpper"/>
+        <property name="prefix" value="PREFIX"/>
+    </bean>
+    <bean id="printerWithDateTime-ErrLower" class="printer.PrinterWithDateTimeImpl">
+        <constructor-arg name="renderer" ref="rendererErrLower"/>
+    </bean>
+    <bean id="printerWithDateTime-ErrUpper" class="printer.PrinterWithDateTimeImpl">
+        <constructor-arg name="renderer" ref="rendererErrUpper"/>
+    </bean>
+
+    <!--  Printer Standard constructor(Renderer)  -->
+    <bean id="printerWithPrefix-StdLower" class="printer.PrinterWithPrefixImpl">
+        <constructor-arg name="renderer" ref="rendererStdLower"/>
+        <property name="prefix" value="PREFIX"/>
+    </bean>
+    <bean id="printerWithPrefix-StdUpper" class="printer.PrinterWithPrefixImpl">
+        <constructor-arg name="renderer" ref="rendererStdUpper"/>
+        <property name="prefix" value="PREFIX"/>
+    </bean>
+    <bean id="printerWithDateTime-StdLower" class="printer.PrinterWithDateTimeImpl">
+        <constructor-arg name="renderer" ref="rendererStdLower"/>
+    </bean>
+    <bean id="printerWithDateTime-StdUpper" class="printer.PrinterWithDateTimeImpl">
+        <constructor-arg name="renderer" ref="rendererStdUpper"/>
+    </bean>
+
+</beans>
